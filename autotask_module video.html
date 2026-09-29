@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<style>
+  html,body{margin:0}
+  body{-webkit-text-size-adjust:100%}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Autotask Actualization</title>
+<style>
+  :root{
+    color-scheme: light;
+    --navy:#12324f; --navy2:#1c4a72; --blue:#2E6DA4; --accent:#2f8f6b;
+    --amber:#B8860B; --amberbg:#FFF7E6;
+    --ink:#1d2530; --body:#33414f; --muted:#667381;
+    --line:#dce4ec; --bg:#f4f7fa; --card:#ffffff;
+    --ok:#237a52; --okbg:#e5f4ec; --bad:#b23b3b; --badbg:#fbeced;
+    --hdr-grad1:#12324f; --hdr-grad2:#1c4a72; --hdr-nav:#dbe7f1;
+    --tint:#eef4fa; --tint-line:#d3e2f0; --row-alt:#f8fafc; --th-ink:#ffffff;
+    --tik-bg:#ffffff; --zone-bg:transparent; --on-navy:#ffffff;
+    --radius:12px; --shadow:0 2px 10px rgba(20,50,79,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --navy:#8fb8e0; --navy2:#5f93c9; --blue:#7fb0dc; --accent:#4fb98a;
+      --amber:#d9a84a; --amberbg:#3a3320;
+      --ink:#eaf1f8; --body:#c3d0dd; --muted:#8b98a6;
+      --line:#2b3a4a; --bg:#0f1a25; --card:#16232f;
+      --ok:#54b98a; --okbg:#17332a; --bad:#e08585; --badbg:#3a2020;
+      --hdr-grad1:#0c1d2e; --hdr-grad2:#123049; --hdr-nav:#a9c3d9;
+      --tint:#172836; --tint-line:#2b3a4a; --row-alt:#1a2a37; --th-ink:#0f1a25;
+      --tik-bg:#1b2b39; --zone-bg:#12202c; --on-navy:#0f1a25;
+      --shadow:0 2px 10px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --navy:#8fb8e0; --navy2:#5f93c9; --blue:#7fb0dc; --accent:#4fb98a;
+    --amber:#d9a84a; --amberbg:#3a3320;
+    --ink:#eaf1f8; --body:#c3d0dd; --muted:#8b98a6;
+    --line:#2b3a4a; --bg:#0f1a25; --card:#16232f;
+    --ok:#54b98a; --okbg:#17332a; --bad:#e08585; --badbg:#3a2020;
+    --hdr-grad1:#0c1d2e; --hdr-grad2:#123049; --hdr-nav:#a9c3d9;
+    --tint:#172836; --tint-line:#2b3a4a; --row-alt:#1a2a37; --th-ink:#0f1a25;
+    --tik-bg:#1b2b39; --zone-bg:#12202c; --on-navy:#0f1a25;
+    --shadow:0 2px 10px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Calibri,sans-serif;
+    color:var(--body);background:var(--bg);line-height:1.6;font-size:16px}
+  h1,h2,h3{color:var(--ink);line-height:1.25;margin:0 0 .5em}
+  h1{font-size:26px}h2{font-size:21px}h3{font-size:17px}
+  p{margin:0 0 1em}
+  a{color:var(--blue)}
+
+  header.site{background:linear-gradient(135deg,var(--hdr-grad1),var(--hdr-grad2));color:#fff;
+    padding:16px 22px;position:sticky;top:env(safe-area-inset-top,0px);z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.14)}
+  .site-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{font-weight:700;font-size:17px;letter-spacing:.2px;display:flex;align-items:center;gap:10px}
+  .brand .dot{width:26px;height:26px;border-radius:7px;background:#fff;color:#12324f;
+    display:grid;place-items:center;font-weight:800;font-size:15px}
+  nav.top{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+  nav.top button{background:transparent;border:0;color:var(--hdr-nav);font:inherit;font-size:14px;
+    font-weight:600;padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+  nav.top button:hover{background:rgba(255,255,255,.12);color:#fff}
+  nav.top button.active{background:#fff;color:#12324f}
+
+  main{max-width:1120px;margin:0 auto;padding:26px 22px 60px;display:grid;
+    grid-template-columns:230px 1fr;gap:30px;align-items:start}
+  aside{position:sticky;top:86px}
+  .side-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px;box-shadow:var(--shadow)}
+  .side-card h4{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .side-nav{display:flex;flex-direction:column;gap:2px}
+  .side-nav button{text-align:left;background:transparent;border:0;font:inherit;font-size:14px;
+    color:var(--body);padding:9px 11px;border-radius:8px;cursor:pointer;display:flex;gap:9px;align-items:center}
+  .side-nav button:hover{background:var(--bg)}
+  .side-nav button.active{background:var(--navy);color:var(--on-navy)}
+  .side-nav .n{width:20px;height:20px;border-radius:50%;background:var(--line);color:var(--navy);
+    font-size:11px;font-weight:700;display:grid;place-items:center;flex:none}
+  .side-nav button.active .n{background:rgba(255,255,255,.25);color:#fff}
+  .side-nav button.done .n{background:var(--accent);color:#fff}
+
+  .content{min-width:0}
+  .page{display:none;animation:fade .25s ease}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 28px;box-shadow:var(--shadow);margin-bottom:20px}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+  .lead{font-size:18px;color:var(--ink)}
+
+  .pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;
+    background:var(--tint);color:var(--navy2);margin:0 6px 6px 0}
+  .objectives{list-style:none;padding:0;margin:0}
+  .objectives li{padding:11px 14px;border:1px solid var(--line);border-radius:9px;margin-bottom:9px;
+    background:var(--row-alt);display:flex;gap:11px}
+  .objectives .num{flex:none;width:24px;height:24px;border-radius:6px;background:var(--navy);color:var(--on-navy);
+    font-weight:700;font-size:13px;display:grid;place-items:center}
+
+  .callout{border-left:4px solid var(--blue);background:var(--tint);padding:13px 16px;border-radius:0 9px 9px 0;margin:0 0 16px}
+  .callout.why{border-color:var(--amber);background:var(--amberbg)}
+  .callout.key{border-color:var(--accent);background:var(--okbg)}
+  .callout h3{margin:0 0 4px;font-size:15px}
+  .callout p{margin:0;font-size:15px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.two{grid-template-columns:1fr}}
+  .mini{border:1px solid var(--line);border-radius:9px;padding:13px 15px;background:var(--card)}
+  .mini h3{font-size:15px;margin-bottom:4px}
+  .mini.good{border-color:#bfe0cd;background:var(--okbg)}
+  .mini.bad{border-color:#f0c9c9;background:var(--badbg)}
+  .mini .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .mini.good .tag{color:var(--ok)}.mini.bad .tag{color:var(--bad)}
+
+  table.ex{width:100%;border-collapse:collapse;margin:6px 0 16px;font-size:14.5px}
+  table.ex th{background:var(--navy);color:var(--th-ink);text-align:left;padding:9px 12px;font-size:13px}
+  table.ex td{border:1px solid var(--line);padding:9px 12px;vertical-align:top}
+  table.ex tr:nth-child(even) td{background:var(--row-alt)}
+
+  .btnrow{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
+  button.nav-btn{font:inherit;font-weight:600;font-size:15px;border-radius:9px;padding:11px 20px;cursor:pointer;border:1px solid var(--navy)}
+  .nav-btn.primary{background:var(--navy);color:var(--on-navy)}
+  .nav-btn.primary:hover{background:var(--navy2)}
+  .nav-btn.ghost{background:var(--card);color:var(--navy)}
+  .nav-btn.ghost:hover{background:var(--bg)}
+  .nav-btn:disabled{opacity:.4;cursor:default}
+
+  .dm-instr{background:var(--tint);border:1px solid var(--tint-line);border-radius:9px;padding:11px 14px;font-size:14.5px;margin-bottom:16px}
+  .dm-board{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:680px){.dm-board{grid-template-columns:1fr}}
+  .dm-col h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .pool{display:flex;flex-direction:column;gap:9px;min-height:30px}
+  .tik{background:var(--tik-bg);border:1.5px solid var(--blue);border-radius:9px;padding:10px 12px;font-size:14px;
+    cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .tik:active{cursor:grabbing}.tik.dragging{opacity:.4}
+  .tik.sel{outline:2px solid var(--amber);outline-offset:1px}
+  .tik .tno{display:block;font-size:11px;font-weight:700;color:var(--blue);margin-bottom:2px}
+  .tik .fb{display:none;margin-top:6px;font-size:12.5px}
+  .tik.correct{border-color:var(--ok);background:var(--okbg)}
+  .tik.incorrect{border-color:var(--bad);background:var(--badbg)}
+  .zone{border:2px dashed var(--line);border-radius:9px;padding:10px 12px;min-height:64px;margin-bottom:12px;transition:.12s}
+  .zone.over{border-color:var(--blue);background:var(--tint)}
+  .zone.tap{border-color:var(--amber)}
+  .zone .zl{font-weight:700;font-size:14px}.zone .zh{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .zone .drop{display:flex;flex-direction:column;gap:8px}
+
+  .note-orig{border-left:4px solid var(--bad);background:var(--badbg);padding:11px 14px;border-radius:0 8px 8px 0;font-style:italic;margin-bottom:12px}
+  textarea{width:100%;border:1.5px solid var(--line);border-radius:9px;padding:11px;font:inherit;font-size:14.5px;resize:vertical;min-height:90px;background:var(--card);color:var(--body)}
+  textarea:focus{outline:none;border-color:var(--blue)}
+  .checklist{list-style:none;padding:0;margin:14px 0 0}
+  .checklist li{padding:8px 0 8px 30px;position:relative;font-size:14.5px;border-top:1px solid var(--line)}
+  .checklist li::before{content:"○";position:absolute;left:6px;color:var(--muted);font-size:16px}
+  .checklist li.hit::before{content:"✓";color:var(--ok);font-weight:700}
+
+  .q{border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:14px;background:var(--card)}
+  .q .qn{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.05em}
+  .q h3{font-size:16px;margin:4px 0 12px}
+  .opt{display:block;border:1.5px solid var(--line);border-radius:8px;padding:10px 13px;margin-bottom:8px;cursor:pointer;font-size:14.5px;transition:.1s;background:var(--card)}
+  .opt:hover{border-color:var(--blue);background:var(--tint)}
+  .opt input{margin-right:9px}
+  .opt.correct{border-color:var(--ok);background:var(--okbg)}
+  .opt.incorrect{border-color:var(--bad);background:var(--badbg)}
+  .opt.locked{cursor:default}
+  .q .exp{display:none;margin-top:10px;font-size:13.5px;padding:10px 12px;border-radius:8px;background:var(--tint);border-left:3px solid var(--blue)}
+  .scorebox{display:none;text-align:center;padding:24px;border-radius:12px;margin-top:8px}
+  .scorebox.pass{background:var(--okbg);border:1px solid var(--ok)}
+  .scorebox.fail{background:var(--amberbg);border:1px solid var(--amber)}
+  .scorebox .big{font-size:40px;font-weight:800;color:var(--ink)}
+
+  .progress{height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+  .progress > i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+
+  footer.site{max-width:1120px;margin:0 auto;padding:18px 22px 40px;color:var(--muted);font-size:12.5px}
+  .hint{font-size:12.5px;color:var(--muted)}
+
+  /* meta grid for overview / required materials */
+  .meta{display:grid;grid-template-columns:150px 1fr;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  @media(max-width:560px){.meta{grid-template-columns:1fr}}
+  .meta dt{background:var(--tint);color:var(--navy2);font-weight:700;font-size:13px;padding:11px 14px;border-bottom:1px solid var(--line)}
+  .meta dd{margin:0;padding:11px 14px;font-size:14.5px;border-bottom:1px solid var(--line)}
+  .meta dt:last-of-type,.meta dd:last-of-type{border-bottom:0}
+  @media(max-width:560px){.meta dt{border-bottom:0}}
+
+  /* checklist-style materials list */
+  .mats{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+  .mats li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+  .mats li::before{content:"✓";color:var(--accent);font-weight:800;flex:none}
+
+  /* Problem → Action → Outcome flow */
+  .pao{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:8px;margin:8px 0 4px}
+  @media(max-width:620px){.pao{grid-template-columns:1fr}.pao .arrow{transform:rotate(90deg);justify-self:center}}
+  .pao .step{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--tint)}
+  .pao .step .k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--blue)}
+  .pao .step .d{font-size:13.5px;color:var(--body);margin-top:3px}
+  .pao .arrow{display:grid;place-items:center;color:var(--muted);font-size:20px;font-weight:700}
+
+  /* decision-rule chain (Topic 1) */
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 8px}
+  .flow .node{border:1px solid var(--tint-line);background:var(--tint);border-radius:20px;padding:7px 14px;font-size:13.5px;font-weight:600;color:var(--navy2)}
+  .flow .sep{color:var(--muted);font-weight:700}
+
+  /* One-or-two scenario activity */
+  .scn{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px;background:var(--card)}
+  .scn .sq{font-size:14.5px;margin:0 0 10px}
+  .scn .sq b{color:var(--blue)}
+  .scn .opts{display:flex;gap:8px;flex-wrap:wrap}
+  .scn .obtn{font:inherit;font-size:13.5px;font-weight:600;border:1.5px solid var(--line);background:var(--card);
+    color:var(--body);border-radius:8px;padding:8px 16px;cursor:pointer}
+  .scn .obtn:hover{border-color:var(--blue)}
+  .scn .obtn.picked-correct{border-color:var(--ok);background:var(--okbg);color:var(--ok)}
+  .scn .obtn.picked-wrong{border-color:var(--bad);background:var(--badbg);color:var(--bad)}
+  .scn .obtn.reveal-correct{border-color:var(--ok);background:var(--okbg);color:var(--ok)}
+  .scn .sfb{display:none;margin-top:10px;font-size:13.5px;padding:9px 12px;border-radius:8px;background:var(--tint);border-left:3px solid var(--accent)}
+  .scn .sfb.show{display:block}
+
+  /* responsive embed wrappers (Genially / Google Form) */
+  .embed-16x9{position:relative;width:100%;padding-top:56.25%;border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;background:var(--tint)}
+  .embed-16x9 iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .embed-ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:var(--muted)}
+  .embed-ph .badge{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+  .embed-tall{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--tint)}
+  .embed-tall iframe{width:100%;min-height:900px;border:0;display:block}
+  .embed-note{font-size:13px;color:var(--muted);margin-top:10px;padding:10px 12px;background:var(--tint);
+    border:1px solid var(--tint-line);border-radius:8px}
+  .embed-note strong{color:var(--ink)}
+
+  /* reveal button + model answer */
+  .reveal-btn{font:inherit;font-weight:600;font-size:13.5px;border:1px solid var(--blue);background:var(--card);
+    color:var(--navy);border-radius:8px;padding:8px 15px;cursor:pointer;margin-top:12px}
+  .reveal-btn:hover{background:var(--tint)}
+  .model{display:none;margin-top:12px}
+  .model.show{display:block}
+  @media(max-width:820px){
+    main{grid-template-columns:1fr}
+    aside{position:static}
+    .side-card{margin-bottom:8px}
+  }
+</style>
+</head>
+<body>
+
+
+<header class="site">
+  <div class="site-inner">
+    <div class="brand"><span class="dot">A</span> Autotask Actualization</div>
+    <nav class="top" id="topnav"></nav>
+  </div>
+</header>
+<div class="progress"><i id="pbar"></i></div>
+
+<main>
+  <aside>
+    <div class="side-card">
+      <h4>Module Contents</h4>
+      <div class="side-nav" id="sidenav"></div>
+    </div>
+    <div class="side-card" style="margin-top:12px">
+      <h4>Estimated time</h4>
+      <p style="margin:0;font-size:13.5px;color:var(--muted)">~20–25 minutes, self-paced. Your progress bar is at the top.</p>
+    </div>
+  </aside>
+
+  <div class="content">
+
+    <!-- PAGE 0: INTRO -->
+    <section class="page active" data-title="Welcome">
+      <div class="card">
+        <div class="eyebrow">Self-paced IT training</div>
+        <h1>Autotask Actualization: Making Every Ticket Count</h1>
+        <p class="lead">Cleaner tickets aren't about filling in more fields. They're about turning the work you already do into information the department can actually use.</p>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Lesson overview</div>
+        <h2>What this module covers</h2>
+        <p>This short, self-paced module helps IT technicians turn everyday ticketing into clean, usable data. It walks through four decisions you make on almost every ticket — how you categorize it, how you document it, whether it should be one ticket or two, and why those choices matter after the ticket closes.</p>
+        <dl class="meta">
+          <dt>Audience</dt><dd>IT technicians (current staff and new hires during onboarding)</dd>
+          <dt>Format</dt><dd>Self-paced, online, completed at your own workstation</dd>
+          <dt>Time</dt><dd>About 20–25 minutes</dd>
+          <dt>Prerequisite</dt><dd>Basic experience creating and closing tickets in Autotask</dd>
+          <dt>Assessment</dt><dd>6-question knowledge check at the end (passing: 5 of 6)</dd>
+        </dl>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Lesson goal</div>
+        <h2>The one outcome</h2>
+        <div class="callout key">
+          <p style="font-size:16px">After completing this module, IT technicians will accurately categorize, document, and route Autotask tickets so the resulting data can be used for reporting, workload analysis, and recurring-problem identification.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">What you'll be able to do</div>
+        <h2>Learning objectives</h2>
+        <ul class="objectives">
+          <li><span class="num">1</span><div><strong>Classify</strong> a support request by selecting the correct issue and sub-issue category that matches the primary problem.</div></li>
+          <li><span class="num">2</span><div><strong>Document</strong> a ticket with the information a reader needs to understand what happened — without asking you.</div></li>
+          <li><span class="num">3</span><div><strong>Decide</strong> when a single visit involves multiple unrelated problems and split it into separate tickets.</div></li>
+          <li><span class="num">4</span><div><strong>Explain</strong> how everyday ticketing decisions affect reporting, workload analysis, and recurring-problem identification.</div></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Lesson introduction</div>
+        <h2>Why this module exists</h2>
+        <p>Autotask was set up fast so we could start moving tickets. That worked — but it left us with a lot of different problems filed the same way. We can see that tickets exist; we often can't see <em>what</em> they were. This module fixes that at the source: you.</p>
+        <p>By the end, you'll categorize, document, and route tickets so the data holds up when someone runs a report, checks a campus's recurring problems, or plans workload.</p>
+
+        <div class="callout why">
+          <h3>Quick thought — before you start</h3>
+          <p>If another technician opened one of your tickets six months from now, could they tell exactly what happened without asking you? Keep that question in mind as you go. No answer needed — it's just the lens for the whole module.</p>
+        </div>
+
+        <div class="two">
+          <div class="mini">
+            <span class="tag" style="color:var(--blue)">BEFORE YOU START</span>
+            <ul style="margin:8px 0 0;padding-left:18px;font-size:14px">
+              <li style="margin-bottom:5px">You should already have basic experience creating and closing tickets in Autotask.</li>
+              <li style="margin-bottom:5px">You do <strong>not</strong> need to create any live tickets during this training.</li>
+              <li>Think about the tickets you normally close on a busy day — you'll be working with situations just like those.</li>
+            </ul>
+          </div>
+          <div class="mini bad">
+            <span class="tag">WHAT THIS MODULE IS NOT</span>
+            <p style="margin:8px 0 0;font-size:14px">This is <strong>not</strong> training on how to use Autotask. You already know how to work a ticket. The focus is on making the information we already enter more useful and consistent.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Required materials</div>
+        <h2>What you'll need</h2>
+        <ul class="mats">
+          <li>A district computer or laptop with internet access and a current web browser</li>
+          <li>Access to the live Autotask environment (for reference — you won't create tickets here)</li>
+          <li>About 20–25 uninterrupted minutes (the module saves your place as you navigate)</li>
+          <li>The downloadable technician job aid, if your team has published it (optional reference)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="callout key">
+          <h3>How the module flows</h3>
+          <p>A short video sets up the "why," then four quick topics — each with hands-on practice. You'll finish with a 6-question check that mirrors real situations you hit in the field.</p>
+        </div>
+        <div class="btnrow"><span></span><button class="nav-btn primary" data-go="1">Start the module →</button></div>
+      </div>
+    </section>
+
+    <!-- PAGE 1: WHY IT MATTERS (video) -->
+    <section class="page" data-title="Why It Matters">
+      <div class="card">
+        <div class="eyebrow">Introduction · Topic overview</div>
+        <h1>Why clean tickets matter</h1>
+
+        <div class="callout why">
+          <h3>Quick prediction</h3>
+          <p>Which is more useful six months later: knowing that 30 technology tickets were closed, or knowing what those 30 tickets were actually for? Hold your answer — the video makes the case.</p>
+        </div>
+
+        <p>Watch this 3–4 minute overview. It shows what happens downstream when many different problems all get filed under one broad category — and what changes when they don't.</p>
+        <div class="embed-16x9">
+          <iframe src="https://www.youtube.com/embed/nRFN9RAY6o4?si=kYM8e4Pnpwqa8NrR" title="Video 1 — Why Clean Tickets Matter" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>What Autotask sees right now</h2>
+        <p>Here's what "filed the same way" actually looks like in a report. Every one of these went in under one broad category:</p>
+        <table class="ex">
+          <tr><th>Ticket reality</th><th>What the report says</th></tr>
+          <tr><td>8 projector failures</td><td>General Technology</td></tr>
+          <tr><td>5 damaged HDMI cables</td><td>General Technology</td></tr>
+          <tr><td>6 account lockouts</td><td>General Technology</td></tr>
+          <tr><td>4 dead network drops</td><td>General Technology</td></tr>
+        </table>
+        <p><strong>23 tickets happened — but the report tells us almost nothing.</strong> Cleaning up the ticket doesn't just help the person reading it. It lets us see that eight projectors failed, five cables needed replacing, or that one campus is suddenly having repeated network issues.</p>
+      </div>
+
+      <div class="card">
+        <h2>The one idea to carry through the module</h2>
+        <div class="callout why">
+          <h3>A ticket has two jobs</h3>
+          <p>The first is to get the immediate problem solved. The second — the one that's easy to skip when you're busy — is to leave behind a record that's still useful after the problem is gone. This module is about that second job.</p>
+        </div>
+        <p>Every topic that follows connects back to a simple question: <strong>"If I only had the ticket, would I know what happened?"</strong></p>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Pre-assessment · not graded</div>
+        <h2>Where do you stand right now?</h2>
+        <p>Before the lesson, take a quick read on your own thinking. These three aren't graded and you won't get a score — they just surface how you'd handle these calls today, so the lesson has something to build on. Answer honestly, then see a short reflection.</p>
+        <div id="pre"></div>
+        <button class="nav-btn primary" id="pre-submit" style="margin-top:6px">See my reflection</button>
+        <div class="callout key" id="pre-done" style="display:none;margin-top:16px"></div>
+        <div class="btnrow" style="margin-top:16px">
+          <button class="nav-btn ghost" data-go="0">← Back</button>
+          <button class="nav-btn primary" data-go="2">Next: Categorizing the work →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: TOPIC 1 CATEGORIZATION + activity -->
+    <section class="page" data-title="1 · Categorizing">
+      <div class="card">
+        <div class="eyebrow">Topic 1</div>
+        <h1>Categorizing the work</h1>
+        <p>In Autotask, the <strong>issue</strong> and <strong>sub-issue</strong> fields are how the system knows what a ticket was actually about. They drive routing, workflow, and — the part we care about here — reporting. If they're wrong or blank, the ticket still closes, but it disappears from any meaningful report.</p>
+
+        <h3>Sort by the <em>primary</em> problem</h3>
+        <p>The rule is simple: categorize the ticket by the main reason the technician was called, not by the first thing you noticed or the easiest box to pick.</p>
+
+        <table class="ex">
+          <tr><th>If the situation is…</th><th>The primary category is…</th></tr>
+          <tr><td>A projector powers on but shows no image</td><td>Hardware / Device</td></tr>
+          <tr><td>A teacher locked out after failed logins</td><td>Account / Access</td></tr>
+          <tr><td>A lab has no internet; wall jack shows no link</td><td>Network / Connectivity</td></tr>
+          <tr><td>One application crashes on launch</td><td>Software / Application</td></tr>
+        </table>
+
+        <h3>The decision, in four quick steps</h3>
+        <div class="flow">
+          <span class="node">What is the primary problem?</span><span class="sep">→</span>
+          <span class="node">What actually failed?</span><span class="sep">→</span>
+          <span class="node">Which Issue fits?</span><span class="sep">→</span>
+          <span class="node">Which Sub-Issue best describes it?</span>
+        </div>
+        <div class="callout"><h3>Keep it recognizable</h3><p>Don't categorize based on what was easiest to select. Categorize based on what another technician would reasonably pick for the same problem. Consistency is what makes the report add up.</p></div>
+
+        <div class="callout why">
+          <h3>Before you close the ticket</h3>
+          <p>The category chosen when the ticket was <em>created</em> may not match what you actually found. A request might say "Projector isn't working," but after troubleshooting you discover a failed HDMI cable. Take a few seconds before closing to make sure the Issue and Sub-Issue describe the problem you <em>resolved</em>, not the one that was first assumed.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Practice · Activity 1 of 3</div>
+        <h2>Drag &amp; match: sort these tickets</h2>
+        <div class="dm-instr"><strong>Drag each ticket onto the category that fits its primary problem.</strong> On a touch screen, tap a ticket then tap a category. One ticket has a twist — sort by the main issue, then read the feedback. Select <strong>Check my answers</strong> when done.</div>
+        <div class="dm-board">
+          <div class="dm-col">
+            <h3>Tickets</h3>
+            <div class="pool" id="dm-pool"></div>
+          </div>
+          <div class="dm-col">
+            <h3>Categories</h3>
+            <div id="dm-zones"></div>
+          </div>
+        </div>
+        <div class="btnrow" style="margin-top:16px">
+          <button class="nav-btn ghost" id="dm-reset">Reset</button>
+          <div style="display:flex;gap:10px;align-items:center">
+            <span id="dm-score" style="font-weight:700"></span>
+            <button class="nav-btn primary" id="dm-check">Check my answers</button>
+          </div>
+        </div>
+        <div class="callout key" id="dm-result" style="display:none;margin-top:16px"></div>
+      </div>
+
+      <div class="card">
+        <div class="btnrow">
+          <button class="nav-btn ghost" data-go="1">← Back</button>
+          <button class="nav-btn primary" data-go="3">Next: Documenting →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: TOPIC 2 DOCUMENTATION + activity -->
+    <section class="page" data-title="2 · Documenting">
+      <div class="card">
+        <div class="eyebrow">Topic 2</div>
+        <h1>Documenting the ticket</h1>
+        <p>Good documentation answers three questions for whoever reads the ticket next — including future-you, six months from now, with no memory of the visit.</p>
+
+        <h3>An easy mental template: Problem → Action → Outcome</h3>
+        <div class="pao">
+          <div class="step"><div class="k">Problem</div><div class="d">What was actually happening?</div></div>
+          <div class="arrow">→</div>
+          <div class="step"><div class="k">Action</div><div class="d">What did you check, change, repair, or replace?</div></div>
+          <div class="arrow">→</div>
+          <div class="step"><div class="k">Outcome</div><div class="d">Resolved, escalated, or left waiting?</div></div>
+        </div>
+        <p class="hint">Hit those three and the ticket explains itself. That's the whole standard.</p>
+
+        <h3 style="margin-top:20px">Complete vs. incomplete</h3>
+        <div class="two">
+          <div class="mini bad">
+            <span class="tag">Incomplete</span>
+            <p style="margin:6px 0 0;font-size:14px">"Fixed the projector."</p>
+            <p style="margin:6px 0 0;font-size:13px;color:var(--muted)">Fixed how? Was it the cable, the bulb, the input? Nobody can learn anything from this later.</p>
+          </div>
+          <div class="mini good">
+            <span class="tag">Complete</span>
+            <p style="margin:6px 0 0;font-size:14px">"Projector showed no image on any input. Reseated HDMI at wall plate and swapped a failed HDMI cable. Image restored, tested all inputs. Left spare cable with teacher."</p>
+          </div>
+        </div>
+
+        <div class="callout why" style="margin-top:18px">
+          <h3>Don't put this in a ticket</h3>
+          <p>Useful documentation doesn't mean documenting <em>everything</em>. Never place passwords, authentication codes, or unnecessary sensitive student or staff information in ticket notes. Record what was wrong and what you did — not credentials or private details.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Interactive walkthrough</div>
+        <h2>Genially: documenting a ticket</h2>
+        <!-- GENIALLY EMBED SLOT -->
+        <!-- To activate: in Genially, open your creation → Share → Embed → copy the iframe code.
+             Delete the .embed-ph line below and paste your <iframe ...></iframe> in its place. -->
+        <div class="embed-16x9">
+          <div class="embed-ph">
+            <div>
+              <div class="badge">Genially embed goes here</div>
+              <p style="margin:0;font-size:14px">Paste your Genially <code>&lt;iframe&gt;</code> code where the placeholder is in the HTML (see the comment in the source, or the setup guide).</p>
+            </div>
+          </div>
+        </div>
+        <div class="embed-note"><strong>Suggested Genially:</strong> an interactive walkthrough of turning a weak note into a Problem → Action → Outcome note — clickable hotspots on a sample (sanitized) ticket. This counts as an additional interactive element for the rubric.</div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Practice · Activity 2 of 3</div>
+        <h2>Rewrite the weak note</h2>
+        <p>Here's a real-style ticket note that would be useless in a report. Rewrite it so it answers all three questions. As you type, the checklist below lights up.</p>
+        <div class="note-orig" id="note-orig">"Went to room 214. Took care of the computer issue. All good now."</div>
+        <label for="note-input" style="font-weight:600;font-size:14px">Your rewrite:</label>
+        <textarea id="note-input" placeholder="Describe the problem, what you did, and how it ended…"></textarea>
+        <ul class="checklist" id="note-check">
+          <li data-k="problem">States the actual problem (not just "issue" or "all good")</li>
+          <li data-k="action">Describes the specific action you took</li>
+          <li data-k="outcome">Says how it ended (resolved / escalated / waiting)</li>
+          <li data-k="length">Gives enough detail to understand without asking you</li>
+        </ul>
+        <div class="callout key" id="note-done" style="display:none;margin-top:16px">
+          <h3>That's a ticket that survives a report.</h3>
+          <p>Notice you didn't write a novel — three clear sentences is plenty. The test is always "could someone act on this without calling me?"</p>
+        </div>
+        <button class="reveal-btn" id="note-reveal">Show a model answer</button>
+        <div class="model" id="note-model">
+          <div class="callout key" style="margin:0">
+            <h3>Model answer</h3>
+            <p style="margin:0 0 6px">"Room 214 desktop wouldn't boot past the login screen — froze every time. Restarted in safe mode, cleared a corrupt user profile, and rebuilt it. Machine boots and logs in normally; confirmed with the teacher before leaving."</p>
+            <p style="margin:0;font-size:13px;color:var(--muted)">Yours doesn't have to match this word-for-word — it just shows the level of detail that answers Problem → Action → Outcome.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="btnrow">
+          <button class="nav-btn ghost" data-go="2">← Back</button>
+          <button class="nav-btn primary" data-go="4">Next: Multiple issues →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: TOPIC 3 MULTIPLE ISSUES -->
+    <section class="page" data-title="3 · Multiple Issues">
+      <div class="card">
+        <div class="eyebrow">Topic 3</div>
+        <h1>When one visit becomes two tickets</h1>
+        <p>Real work doesn't fit neatly in one box. You go out for one thing and find another. The question isn't "can I close this in one ticket?" — it's "will the report make sense if I do?"</p>
+
+        <div class="callout why">
+          <h3>The situation</h3>
+          <p>You're called to fix a slow, freezing laptop. While you're there, you notice the classroom's network jack is dead — unrelated to the laptop, and something the teacher hadn't reported yet.</p>
+        </div>
+
+        <h3>Two problems, two tickets</h3>
+        <p>The laptop is why you were called — that's the primary ticket (Hardware/Performance). The dead jack is a separate problem with a separate cause, a separate fix, and separate reporting value (Network/Connectivity). Folding it into the laptop ticket hides it.</p>
+
+        <table class="ex">
+          <tr><th>Approach</th><th>What the report shows later</th></tr>
+          <tr><td>One ticket: "laptop slow, also fixed jack"</td><td>A laptop performance issue. The network problem is invisible — if three rooms have dead jacks, no one sees the pattern.</td></tr>
+          <tr><td>Two tickets: laptop + network jack</td><td>A laptop issue <em>and</em> a connectivity issue, each countable. Now recurring network problems on that campus actually surface.</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>But watch the other direction</h2>
+        <div class="callout why">
+          <h3>Multiple symptoms don't always mean multiple tickets</h3>
+          <p>A teacher reports they can't print, can't reach a shared drive, and can't get online. You discover their network cable is unplugged. Three symptoms — but one cause and one fix. <strong>That's one ticket.</strong></p>
+        </div>
+        <p>Compare that with: you plug the cable back in, and while you're there you notice the projector lamp has failed. Different cause, different fix, different reporting value — <strong>that becomes a second ticket.</strong></p>
+        <div class="callout key">
+          <h3>The decision rule</h3>
+          <p><strong>Same cause + same fix = usually one ticket.</strong><br><strong>Different cause + different fix = usually separate tickets.</strong></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Practice · Activity 3 of 3</div>
+        <h2>One ticket or two?</h2>
+        <p>Read each situation and choose. You'll get feedback right away.</p>
+        <div id="scenarios"></div>
+        <div class="callout key" id="scn-done" style="display:none">
+          <h3>You've got the distinction.</h3>
+          <p>It comes down to cause and fix — not how many things you noticed. One cause and one fix stays one ticket; separate causes with separate fixes each earn their own.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="btnrow">
+          <button class="nav-btn ghost" data-go="3">← Back</button>
+          <button class="nav-btn primary" data-go="5">Next: Final check →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: FINAL ASSESSMENT (with Topic 4 folded in as preamble) -->
+    <section class="page" data-title="Final Check">
+      <div class="card">
+        <div class="eyebrow">Before the check · why this matters</div>
+        <h1>Where your tickets go after they close</h1>
+        <p>Before the final questions, one last idea that ties the module together: every decision from the last three topics feeds the same place — the data the department uses to make decisions. Here's the chain.</p>
+
+        <table class="ex">
+          <tr><th>Your ticketing choice</th><th>What it becomes downstream</th></tr>
+          <tr><td>Correct issue / sub-issue</td><td>Reports that show what's actually breaking, where, and how often</td></tr>
+          <tr><td>Clear documentation</td><td>A searchable record — the next tech finds the fix instead of rediscovering it</td></tr>
+          <tr><td>Splitting multi-issue visits</td><td>Recurring problems surface as patterns instead of hiding inside other tickets</td></tr>
+          <tr><td>Consistent categories across the team</td><td>Workload and staffing decisions based on real numbers, not guesses</td></tr>
+        </table>
+
+        <div class="callout">
+          <h3>The payoff</h3>
+          <p>None of this asks you to do more work at the ticket — it asks you to do the same work in a way that pays off twice: once when the problem's solved, and again every time someone learns from the record you left.</p>
+        </div>
+
+        <h3 style="margin-top:20px">The whole module in four lines</h3>
+        <p><span class="pill">1 · Categorize</span> by the primary problem, using the box another tech would also pick.</p>
+        <p><span class="pill">2 · Document</span> the problem, the action, and the outcome — enough that no one has to ask you.</p>
+        <p><span class="pill">3 · Split</span> unrelated problems into separate tickets so patterns stay visible.</p>
+        <p><span class="pill">4 · Remember</span> the ticket outlives the visit. Clean data is the whole point.</p>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Final assessment</div>
+        <h1>Knowledge check</h1>
+        <p>Six questions drawn from real situations. Answer each one in the form below and submit. Your score is recorded automatically — no screenshot needed. <strong>Passing is 5 of 6.</strong></p>
+        
+        <div class="embed-tall" style="margin-top:14px">
+          <div class="embed-ph" style="position:static;min-height:360px">
+            <div>
+              <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeOKg3U374IloeEOBK7ktXuX0pvdRpP4seHJow6Y6-0GB844g/viewform?embedded=true" width="640" height="1074" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+          </div>
+        </div>
+        
+        <div class="btnrow" style="margin-top:16px">
+          <button class="nav-btn ghost" data-go="4">← Back to Topic 3</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site">
+  Autotask Actualization · Self-paced IT technician training · Vanguard Academy IT Department.
+  Prototype build for review — categories and examples are placeholders; replace with the district's live Autotask taxonomy before piloting.
+
+  Website code generated with assistance from Claude. ChatGPT was used for grammar and copy editing.
+</footer>
+
+<script>
+/* ---------------- Page navigation ---------------- */
+const pages = [...document.querySelectorAll(".page")];
+const topnav = document.getElementById("topnav");
+const sidenav = document.getElementById("sidenav");
+const pbar = document.getElementById("pbar");
+let current = 0;
+const visited = new Set([0]);
+
+pages.forEach((pg,i)=>{
+  const title = pg.dataset.title;
+  const b = document.createElement("button");
+  b.textContent = title; b.onclick=()=>goto(i);
+  topnav.appendChild(b);
+  const sb = document.createElement("button");
+  sb.innerHTML = `<span class="n">${i}</span><span>${title}</span>`;
+  sb.onclick=()=>goto(i);
+  sidenav.appendChild(sb);
+});
+function goto(i){
+  current=i; visited.add(i);
+  pages.forEach((p,x)=>p.classList.toggle("active",x===i));
+  [...topnav.children].forEach((b,x)=>b.classList.toggle("active",x===i));
+  [...sidenav.children].forEach((b,x)=>{
+    b.classList.toggle("active",x===i);
+    b.classList.toggle("done",visited.has(x)&&x!==i);
+  });
+  pbar.style.width = (i/(pages.length-1)*100)+"%";
+  try{history.replaceState(null,"","#"+i);}catch(e){}
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>goto(+b.dataset.go));
+function startPage(){var h=parseInt((location.hash||"").replace("#",""),10);return (!isNaN(h)&&h>=0&&h<pages.length)?h:0;}
+goto(startPage());
+window.addEventListener("hashchange",()=>goto(startPage()));
+
+/* ---------------- Activity 1: Drag & match (with tap fallback) ---------------- */
+const CATS=[
+  {id:"hardware",label:"Hardware / Device",hint:"A physical device fails or is damaged"},
+  {id:"network",label:"Network / Connectivity",hint:"Wi-Fi, wired drops, no internet, a dead jack"},
+  {id:"software",label:"Software / Application",hint:"An app won't launch, errors, updates"},
+  {id:"account",label:"Account / Access",hint:"Passwords, logins, permissions, lockouts"},
+];
+const TIKS=[
+  {id:"t1",cat:"hardware",text:"A classroom projector powers on but shows no image from any input.",
+   ok:"Correct — the device itself is failing, so it's Hardware.",no:"The projector hardware is the problem, not what's being sent to it. → Hardware."},
+  {id:"t2",cat:"account",text:"A teacher is locked out after too many failed password attempts.",
+   ok:"Correct — nothing's broken; it's an access problem.",no:"No device is broken; the teacher can't get in. → Account / Access."},
+  {id:"t3",cat:"network",text:"A whole lab lost internet; the wall jack shows no link light.",
+   ok:"Correct — a dead jack with no link is connectivity.",no:"The computers work; the connection is down. → Network / Connectivity."},
+  {id:"t4",cat:"software",text:"The grading application crashes to the desktop every time it opens.",
+   ok:"Correct — one app failing is a Software issue.",no:"The device runs fine; one app is failing. → Software / Application."},
+  {id:"t5",cat:"hardware",text:"Called for a slow laptop; you also notice the touchpad is cracked.",
+   ok:"Correct — the primary call is the laptop (Hardware). The cracked touchpad is a second problem worth its own ticket — that's Topic 3.",no:"You were called for the laptop's performance (Hardware). Watch the second detail — the cracked touchpad may need its own ticket."},
+];
+const pool=document.getElementById("dm-pool"), zonesEl=document.getElementById("dm-zones");
+let dragId=null, tapId=null;
+function dmRender(){
+  pool.innerHTML="";zonesEl.innerHTML="";dragId=null;tapId=null;
+  document.getElementById("dm-result").style.display="none";
+  document.getElementById("dm-score").textContent="";
+  TIKS.forEach(t=>{
+    const d=document.createElement("div");d.className="tik";d.draggable=true;d.id=t.id;
+    d.innerHTML=`<span class="tno">Ticket ${t.id.slice(1)}</span>${t.text}<div class="fb"></div>`;
+    d.addEventListener("dragstart",()=>{dragId=t.id;d.classList.add("dragging")});
+    d.addEventListener("dragend",()=>d.classList.remove("dragging"));
+    d.addEventListener("click",(e)=>{ // tap-to-select fallback
+      if(d.closest(".zone")) return; // already placed in a zone; let zone handle clicks
+      e.stopPropagation();
+      if(tapId===t.id){clearTap();return;}
+      clearTap();tapId=t.id;d.classList.add("sel");
+      zonesEl.querySelectorAll(".zone").forEach(z=>z.classList.add("tap"));
+    });
+    pool.appendChild(d);
+  });
+  CATS.forEach(c=>{
+    const z=document.createElement("div");z.className="zone";z.dataset.cat=c.id;
+    z.innerHTML=`<div class="zl">${c.label}</div><div class="zh">${c.hint}</div><div class="drop"></div>`;
+    z.addEventListener("dragover",e=>{e.preventDefault();z.classList.add("over")});
+    z.addEventListener("dragleave",()=>z.classList.remove("over"));
+    z.addEventListener("drop",e=>{e.preventDefault();z.classList.remove("over");
+      const el=document.getElementById(dragId);if(el){z.querySelector(".drop").appendChild(el);dmClear()}});
+    z.addEventListener("click",()=>{ // tap fallback: place selected ticket
+      if(tapId){const el=document.getElementById(tapId);z.querySelector(".drop").appendChild(el);clearTap();dmClear();}
+    });
+    zonesEl.appendChild(z);
+  });
+  pool.ondragover=e=>e.preventDefault();
+  pool.ondrop=e=>{e.preventDefault();const el=document.getElementById(dragId);if(el){pool.appendChild(el);dmClear()}};
+}
+function clearTap(){tapId=null;
+  document.querySelectorAll(".tik.sel").forEach(el=>el.classList.remove("sel"));
+  document.querySelectorAll(".zone.tap").forEach(z=>z.classList.remove("tap"));
+}
+function dmClear(){
+  document.querySelectorAll(".tik").forEach(el=>{el.classList.remove("correct","incorrect");
+    const f=el.querySelector(".fb");f.style.display="none";f.textContent=""});
+  document.getElementById("dm-result").style.display="none";
+  document.getElementById("dm-score").textContent="";
+}
+document.getElementById("dm-check").onclick=()=>{
+  let correct=0,placed=0;
+  TIKS.forEach(t=>{
+    const el=document.getElementById(t.id),z=el.closest(".zone"),f=el.querySelector(".fb");
+    if(!z)return;placed++;
+    const right=z.dataset.cat===t.cat;
+    el.classList.add(right?"correct":"incorrect");
+    f.textContent=right?t.ok:t.no;f.style.color=right?"#237a52":"#b23b3b";f.style.display="block";
+    if(right)correct++;
+  });
+  document.getElementById("dm-score").textContent=`${correct} / ${TIKS.length}`;
+  const r=document.getElementById("dm-result");r.style.display="block";
+  if(correct===TIKS.length){r.innerHTML="<h3>All five correct.</h3><p>You caught that Ticket 5 hides a second, unrelated problem — exactly the instinct the next topic builds on.</p>";}
+  else if(placed<TIKS.length){r.innerHTML="<h3>Sort every ticket first.</h3><p>Drag the remaining tickets into a category, then check again.</p>";}
+  else{r.innerHTML="<h3>Check the red tickets.</h3><p>Read the feedback under each, move them to the right category, and check again.</p>";}
+};
+document.getElementById("dm-reset").onclick=dmRender;
+dmRender();
+
+/* ---------------- Activity 2: Note rewrite ---------------- */
+const note=document.getElementById("note-input"), checks=document.getElementById("note-check"), done=document.getElementById("note-done");
+note.addEventListener("input",()=>{
+  const v=note.value.toLowerCase(), words=note.value.trim().split(/\s+/).filter(Boolean).length;
+  const hits={
+    problem:/(wouldn'?t|would not|error|crash|no image|no internet|frozen|freez|slow|not work|failed|broken|black screen|blue screen|won'?t|offline|disconnect|no link|dead|lock|unresponsive|no display|no signal|jam)/.test(v),
+    action:/(replaced|reseated|reset|restart|reboot|swapped|updated|reinstall|reinstalled|installed|cleared|reconnected|configured|checked|tested|ran|escalated|created|unlock|changed|plugged|adjusted|cleaned|imaged|re-?imaged|repaired)/.test(v),
+    outcome:/(resolved|restored|working|fixed|tested|confirmed|verified|escalated|waiting|pending|ordered|follow.?up|returned|left|able to|back (up|online)|no longer|operational)/.test(v),
+    length: words>=12
+  };
+  [...checks.children].forEach(li=>li.classList.toggle("hit",hits[li.dataset.k]));
+  done.style.display = Object.values(hits).every(Boolean) ? "block":"none";
+});
+
+/* ---------------- Pre-assessment (ungraded, activation) ---------------- */
+const PRE=[
+  {q:"When you pick a ticket's category, what should it be based on?",
+   opts:["Whatever's quickest to select and close","The main problem you were actually there to fix","The first thing you happened to notice"],
+   best:1,
+   fb:"You'll build on this in Topic 1: category should reflect the primary problem you resolved, chosen the way another tech would choose it."},
+  {q:"Six months from now, a good ticket note lets another tech understand what happened. What does it need?",
+   opts:["Just that it was resolved","The problem, what you did, and how it ended","As much detail as possible, including passwords for next time"],
+   best:1,
+   fb:"Topic 2 calls this Problem → Action → Outcome — and notes never hold passwords or sensitive personal info."},
+  {q:"You go out for one problem and find a second, unrelated one. What usually happens to the ticket?",
+   opts:["Always keep it as one ticket — same visit","It depends on cause and fix: different cause + different fix = separate tickets","Always split every problem you notice into its own ticket"],
+   best:1,
+   fb:"Topic 3 sharpens this: same cause and fix stays one ticket; a genuinely separate problem earns its own."},
+];
+(function(){
+  const wrap=document.getElementById("pre"); if(!wrap) return;
+  PRE.forEach((item,i)=>{
+    const d=document.createElement("div");d.className="q";
+    d.innerHTML=`<div class="qn">Pre-question ${i+1}</div><h3>${item.q}</h3>`+
+      item.opts.map((o,j)=>`<label class="opt"><input type="radio" name="pre${i}" value="${j}">${o}</label>`).join("");
+    wrap.appendChild(d);
+  });
+  document.getElementById("pre-submit").addEventListener("click",()=>{
+    let answered=0;
+    PRE.forEach((item,i)=>{
+      const q=wrap.children[i];
+      const picked=q.querySelector(`input[name="pre${i}"]:checked`);
+      q.querySelectorAll(".opt").forEach(o=>o.classList.add("locked"));
+      if(picked) answered++;
+    });
+    const done=document.getElementById("pre-done");
+    done.style.display="block";
+    done.innerHTML="<h3>Thanks — that's your starting point.</h3>"+
+      "<p>No score here on purpose; this was just to get you thinking. Here's what each one connects to:</p>"+
+      "<ul style='margin:8px 0 0;padding-left:18px;font-size:14.5px'>"+
+      PRE.map(x=>`<li style='margin-bottom:6px'>${x.fb}</li>`).join("")+"</ul>"+
+      "<p style='margin-top:10px'>You'll answer graded versions of these ideas in the final check. Watch how your thinking changes as you go.</p>";
+    done.scrollIntoView({behavior:"smooth",block:"nearest"});
+  });
+})();
+
+/* ---------------- Model-answer reveal (Topic 2) ---------------- */
+(function(){
+  var btn=document.getElementById("note-reveal"), m=document.getElementById("note-model");
+  if(btn){btn.addEventListener("click",function(){
+    var open=m.classList.toggle("show");
+    btn.textContent=open?"Hide the model answer":"Show a model answer";
+  });}
+})();
+
+/* ---------------- Activity 3: One ticket or two? (Topic 3) ---------------- */
+const SCN=[
+  {t:"A laptop can't reach the internet or the network printer. Reconnecting Wi-Fi fixes both.",
+   answer:"one",fb:"One ticket — one underlying problem (no connection) and one fix (reconnect Wi-Fi)."},
+  {t:"A teacher needs a password reset, and while you're there you replace a damaged projector cable.",
+   answer:"two",fb:"Two tickets — unrelated problems with separate causes and separate fixes."},
+  {t:"Three applications won't open because the device's drive is full. Clearing storage resolves all three.",
+   answer:"one",fb:"One ticket — a single root cause (full drive) with one fix."},
+  {t:"A student Chromebook has a cracked screen and also can't join Wi-Fi because its wireless card failed.",
+   answer:"two",fb:"Two tickets — a broken screen and a failed wireless card are different problems with different fixes."},
+];
+(function(){
+  const wrap=document.getElementById("scenarios"); if(!wrap) return;
+  const answered=new Array(SCN.length).fill(false);
+  SCN.forEach((s,i)=>{
+    const d=document.createElement("div");d.className="scn";
+    d.innerHTML=`<p class="sq"><b>Scenario ${i+1}.</b> ${s.t}</p>
+      <div class="opts">
+        <button class="obtn" data-v="one">One ticket</button>
+        <button class="obtn" data-v="two">Two tickets</button>
+      </div>
+      <div class="sfb"></div>`;
+    const fb=d.querySelector(".sfb");
+    d.querySelectorAll(".obtn").forEach(b=>{
+      b.addEventListener("click",()=>{
+        const correct=b.dataset.v===s.answer;
+        d.querySelectorAll(".obtn").forEach(x=>{x.classList.remove("picked-correct","picked-wrong","reveal-correct");});
+        b.classList.add(correct?"picked-correct":"picked-wrong");
+        if(!correct){d.querySelector(`.obtn[data-v="${s.answer}"]`).classList.add("reveal-correct");}
+        fb.textContent=(correct?"Correct. ":"Not quite. ")+s.fb;
+        fb.classList.add("show");
+        answered[i]=true;
+        if(answered.every(Boolean)){document.getElementById("scn-done").style.display="block";}
+      });
+    });
+    wrap.appendChild(d);
+  });
+})();
+
+/* Final quiz is now a Google Form embedded in the Final Check page — no in-page quiz JS needed. */
+</script>
+
+</body>
+</html>
