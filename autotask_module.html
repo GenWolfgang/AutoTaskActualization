@@ -124,14 +124,6 @@
   table.ex td{border:1px solid var(--line);padding:9px 12px;vertical-align:top}
   table.ex tr:nth-child(even) td{background:var(--row-alt)}
 
-  .video-frame{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0d1b28}
-  .video-ph{aspect-ratio:16/9;display:grid;place-items:center;text-align:center;color:#cfe0ef;
-    background:repeating-linear-gradient(45deg,#12324f,#12324f 14px,#163a5c 14px,#163a5c 28px)}
-  .video-ph .play{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92);
-    display:grid;place-items:center;margin:0 auto 12px}
-  .video-ph .play::after{content:"";border-left:20px solid var(--navy);border-top:12px solid transparent;
-    border-bottom:12px solid transparent;margin-left:5px}
-
   .btnrow{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
   button.nav-btn{font:inherit;font-weight:600;font-size:15px;border-radius:9px;padding:11px 20px;cursor:pointer;border:1px solid var(--navy)}
   .nav-btn.primary{background:var(--navy);color:var(--on-navy)}
@@ -187,11 +179,6 @@
 
   footer.site{max-width:1120px;margin:0 auto;padding:18px 22px 40px;color:var(--muted);font-size:12.5px}
   .hint{font-size:12.5px;color:var(--muted)}
-
-  /* video caption strip under placeholder */
-  .video-cap{font-size:13px;color:var(--muted);margin-top:10px;padding:10px 12px;background:var(--tint);
-    border:1px solid var(--tint-line);border-radius:8px}
-  .video-cap strong{color:var(--ink)}
 
   /* meta grid for overview / required materials */
   .meta{display:grid;grid-template-columns:150px 1fr;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
@@ -382,14 +369,8 @@
         </div>
 
         <p>Watch this 3–4 minute overview. It shows what happens downstream when many different problems all get filed under one broad category — and what changes when they don't.</p>
-        <div class="video-frame">
-          <div class="video-ph">
-            <div>
-              <div class="play"></div>
-              <strong style="color:#fff">Video 1 — Why Clean Tickets Matter</strong><br>
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/nRFN9RAY6o4?si=kYM8e4Pnpwqa8NrR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-          </div>
+        <div class="embed-16x9">
+          <iframe src="https://www.youtube.com/embed/nRFN9RAY6o4?si=kYM8e4Pnpwqa8NrR" title="Video 1 — Why Clean Tickets Matter" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
       </div>
 
@@ -463,16 +444,10 @@
       </div>
 
       <div class="card">
-        <div class="eyebrow">Optional walkthrough</div>
+        <div class="eyebrow">Walkthrough</div>
         <h2>Video: categorizing in Autotask</h2>
-        <div class="video-frame">
-          <div class="video-ph">
-            <div>
-              <div class="play"></div>
-              <strong style="color:#fff">Video 2 — Categorizing the Work</strong><br>
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/_KLFttAPZsY?si=50PgbO9dDGDvrmfB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-          </div>
+        <div class="embed-16x9">
+          <iframe src="https://www.youtube.com/embed/_KLFttAPZsY?si=50PgbO9dDGDvrmfB" title="Video 2 — Categorizing the Work" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
       </div>
 
@@ -643,18 +618,11 @@
       </div>
 
       <div class="card">
-        <div class="eyebrow">Optional walkthrough</div>
+        <div class="eyebrow">Walkthrough</div>
         <h2>Video: splitting a multi-issue visit</h2>
-        <div class="video-frame">
-          <div class="video-ph">
-            <div>
-              <div class="play"></div>
-              <strong style="color:#fff">Video 4 — One Ticket or Two?</strong><br>
-              <span style="font-size:13px">Optional screen-capture placeholder.</span>
-            </div>
-          </div>
+        <div class="embed-16x9">
+          <iframe src="https://www.youtube.com/embed/AQJ4RCsja6E?si=w_HnCsjcLNwR139T" title="Video 4 — One Ticket or Two?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-        <div class="video-cap"><iframe width="560" height="315" src="https://www.youtube.com/embed/AQJ4RCsja6E?si=w_HnCsjcLNwR139T" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
 
       <div class="card">
